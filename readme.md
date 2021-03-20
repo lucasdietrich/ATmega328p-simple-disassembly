@@ -12,15 +12,15 @@ Analysis disassembly : [disassembly.s](disassembly.s)
 
 ## Analysis
 
-![disassembly.png](./pics/disassembly.png)
+![disassembly.png](pics/disssembly.png)
 
 ### LED
 ```asm
-  80:	25 9a       	sbi	0x04, 5	; 4                         ; set bit 5 (DDB5) to register 0x04 (DDRB)    ;   DDRB |= 1 << 5;     ;     set PB5 pin as output
-  82:	90 e2       	ldi	r25, 0x20	; 32                    ; load immediate 0x20 in register r25         ;                       ;     calculate 1 << 5
-  84:	85 b1       	in	r24, 0x05	; 5                     ; in r24 from I/O 0x05 (PORTB)                ;                       ;     read PORTB value
-  86:	89 27       	eor	r24, r25                            ; exclusive or r24 = r24 ^ r25                ;                       ;     calculate PORTB ^ (1 << 5)
-  88:	85 b9       	out	0x05, r24	; 5                     ; out r24 to I/O 0x05 (PORTB)                 ;   PORTB ^= 1 << 5;    ;     calculate PORTB ^= 1 << 5;
+  80:	25 9a       	sbi	0x04, 5	; 4							; set bit 5 (DDB5) to register 0x04 (DDRB)    ;   DDRB |= 1 << 5;     ;     set PB5 pin as output
+  82:	90 e2       	ldi	r25, 0x20	; 32					; load immediate 0x20 in register r25         ;                       ;     calculate 1 << 5
+  84:	85 b1       	in	r24, 0x05	; 5						; in r24 from I/O 0x05 (PORTB)                ;                       ;     read PORTB value
+  86:	89 27       	eor	r24, r25 							; exclusive or r24 = r24 ^ r25                ;                       ;     calculate PORTB ^ (1 << 5)
+  88:	85 b9       	out	0x05, r24	; 5						; out r24 to I/O 0x05 (PORTB)                 ;   PORTB ^= 1 << 5;    ;     calculate PORTB ^= 1 << 5;
 ```
 
 ### delay ms
@@ -28,13 +28,13 @@ Analysis disassembly : [disassembly.s](disassembly.s)
 The assembly code following seems to do the delay function.
 
 ```asm
-  8a:	2f ef       	ldi	r18, 0xFF	; 255                     ; load immediate 0xFF in register r18
-  8c:	33 ed       	ldi	r19, 0xD3	; 211                     ; load immediate 0xD3 in register r19
-  8e:	80 e3       	ldi	r24, 0x30	; 48                      ; load immediate 0x30 in register r24
-  90:	21 50       	subi	r18, 0x01	; 1                   ; Subtract Immediate r18 = r18 - 0x01
-  92:	30 40       	sbci	r19, 0x00	; 0                   ; Subtract Immediate with Carry r19 = r19 - 0 - C
-  94:	80 40       	sbci	r24, 0x00	; 0                   ; Subtract Immediate with Carry r24 = r24 - 0 - C
-  96:	e1 f7       	brne	.-8      	; 0x90 <main+0x10>    ; Branch to addr 0x90 if Not Equal            ;   delay loop
+  8a:	2f ef       	ldi	r18, 0xFF	; 255						; load immediate 0xFF in register r18
+  8c:	33 ed       	ldi	r19, 0xD3	; 211 						; load immediate 0xD3 in register r19
+  8e:	80 e3       	ldi	r24, 0x30	; 48 						; load immediate 0x30 in register r24
+  90:	21 50       	subi	r18, 0x01	; 1						; Subtract Immediate r18 = r18 - 0x01
+  92:	30 40       	sbci	r19, 0x00	; 0						; Subtract Immediate with Carry r19 = r19 - 0 - C
+  94:	80 40       	sbci	r24, 0x00	; 0						; Subtract Immediate with Carry r24 = r24 - 0 - C
+  96:	e1 f7       	brne	.-8      	; 0x90 <main+0x10> 		; Branch to addr 0x90 if Not Equal            ;   delay loop
 ```
 
 It is a 24 bit decrementer.
